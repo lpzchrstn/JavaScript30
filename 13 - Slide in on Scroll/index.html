@@ -58,6 +58,33 @@
       };
     }
 
+    let images = document.querySelectorAll(".site-wrap .slide-in");
+
+    function checkTriggerSlide() {
+
+      images.forEach( image => {
+        let scrollPos = window.scrollY + window.innerHeight;
+        let imagePosTop = image.offsetTop;
+        let imagePosBottom = image.offsetTop + image.offsetHeight;
+
+        let fadeIn = scrollPos > imagePosBottom;
+        let fadeOutLower = scrollPos > ( imagePosBottom + window.innerHeight );
+        let fadeOutUpper = scrollPos < imagePosTop;
+
+        if( fadeIn ) {
+          image.style.opacity = 1;
+          image.style.transform = "none";
+        }
+
+        if( fadeOutLower || fadeOutUpper ) {
+          image.style.transform = image.classList.contains( "align-left" ) ? "translateX(-30%) scale(0.95)" : "translateX(30%) scale(0.95)";
+          image.style.opacity = 0;
+        }
+      });
+    }
+
+    window.addEventListener('scroll', debounce( checkTriggerSlide ));
+
   </script>
 
   <style>
