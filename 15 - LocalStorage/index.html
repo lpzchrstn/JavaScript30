@@ -23,12 +23,90 @@
       <input type="text" name="item" placeholder="Item Name" required>
       <input type="submit" value="+ Add Item">
     </form>
+    <input type="button" id="delete-all" value="Delete All"/>
+    <input type="button" id="check-all" value="Check All"/>
+    <input type="button" id="uncheck-all" value="Uncheck All"/>
   </div>
 
 <script>
   const addItems = document.querySelector('.add-items');
   const itemsList = document.querySelector('.plates');
-  const items = [];
+  let items = [];
+  const dishField = document.querySelector('input[name=item]');
+  const deleteAll = document.querySelector('#delete-all');
+  const checkAll = document.querySelector('#check-all');
+  const uncheckAll = document.querySelector('#uncheck-all');
+
+  if( localStorage.getItem( "plates" ) ) {
+    items = JSON.parse( localStorage.getItem( "plates" ) ); 
+  }
+
+  //Initial population of dishes from local storage
+  populatePlates();
+  const checkboxes = document.querySelectorAll('input[type=checkbox]');
+
+  checkboxes.forEach( checkbox => checkbox.addEventListener( "click", updateStatus ));
+  addItems.addEventListener( "submit", addDish );
+  deleteAll.addEventListener( "click", deleteAllDish );
+  checkAll.addEventListener( "click", toggleAllStatus );
+  uncheckAll.addEventListener( "click", () => {
+    toggleAllStatus( false );
+  });
+
+  function addDish( e ) {
+    e.preventDefault();
+
+    let dish = {
+      name: dishField.value,
+      checked: false
+    };
+
+    items.push( dish );
+    saveDishes();
+    dishField.value = "";
+
+    populatePlates();
+  }
+
+  function populatePlates() {
+    let html = "";
+
+    items.forEach( (item, i) => {
+      html+= `
+      <li>
+        <input type="checkbox" id="item${i}" ${item.checked ? 'checked' : ''} dish-index="${i}" />
+        <label for="item${i}">${item.name}</label>
+      </li>`;
+    });
+
+    itemsList.innerHTML = html;
+
+    //Reselect new ccheckboxes and assign new event listener
+    let newCheckboxes = document.querySelectorAll( 'input[type=checkbox]' );
+    newCheckboxes.forEach( checkbox => checkbox.addEventListener( "click", updateStatus ));
+  }
+
+  function updateStatus() {
+    let dishIndex = this.getAttribute( "dish-index" );
+    items[dishIndex].checked = !items[dishIndex].checked;
+    saveDishes();
+  }
+
+  function saveDishes() {
+    localStorage.setItem( 'plates', JSON.stringify(items) );
+  }
+
+  function deleteAllDish() {
+    items = [];
+    populatePlates();
+    saveDishes();
+  }
+
+  function toggleAllStatus( status = true) {
+    items.forEach( item => item.checked = status );
+    populatePlates();
+    saveDishes();
+  }
 
 </script>
 
