@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Key Detection</title>
+  <script type="text/javascript" src="https://www.cornify.com/js/cornify.js"></script>
+</head>
+<body>
+<script>
+  const sequence = "christian";
+  const sequenceInCode = [];
+
+  //Get the keyCode of the sequence
+  sequence.split("").forEach( letter => sequenceInCode.push( letter.toUpperCase().charCodeAt(0) ));
+
+  let pressed = [];
+  window.addEventListener( "keyup", (e) => {
+    if( sequenceInCode[pressed.length] == e.keyCode ) {
+      pressed.push( e.keyCode );
+    } else {
+      pressed = [];
+    }
+
+    if(sequenceInCode.length == pressed.length) {
+      console.log( "You did it!" );
+    }
+  });
+</script>
+</body>
+</html>
