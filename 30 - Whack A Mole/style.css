@@ -67,3 +67,14 @@ h1 {
 .hole.up .mole {
   top: 0;
 }
+
+.high-score {
+  background-color: white;
+  margin-top: 100px;
+  width: 500px;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 20px;
+  font-size: 40px;
+}
