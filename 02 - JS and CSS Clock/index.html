@@ -72,6 +72,7 @@
   <script>
     const initialRotate = 90;
     setInterval( timeTick, 1000 );
+    timeTick();
 
     function timeTick() {
       const time = new Date();
@@ -86,7 +87,7 @@
 
     function setHandRotation( handClass, currentTimeValue, maxTimeValue ) {
       const hand = document.querySelector(`.hand.${handClass}`);
-      handRotation = ( currentTimeValue / maxTimeValue ) * 360;
+      const handRotation = ( currentTimeValue / maxTimeValue ) * 360;
       hand.style.transform = `rotate(${handRotation + initialRotate}deg)`;
     }
   </script>
