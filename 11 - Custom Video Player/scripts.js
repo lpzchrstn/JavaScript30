@@ -34,11 +34,11 @@ function changeSpeed() {
 }
 
 function moveProgressBar() {
-    let progressInPercent = ( video.currentTime / video.duration ) * 100;
+    const progressInPercent = ( video.currentTime / video.duration ) * 100;
     progressBar.style.flexBasis = `${progressInPercent}%`;
 }
 
 function setProgress(e) {
-    let progressInPercent = ( e.offsetX / progressBarContainer.offsetWidth ) * 100;
+    const progressInPercent = ( e.offsetX / progressBarContainer.offsetWidth ) * 100;
     video.currentTime = video.duration *  (progressInPercent / 100 ); 
 }
