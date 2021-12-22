@@ -17,9 +17,6 @@ function getVideo() {
 
 function paintToCanvas() {
     const {videoWidth: width, videoHeight: height} = video;
-    console.log( width, height );
-    console.log( video.videoWidth, video.videoHeight );
-
     canvas.width = width;
     canvas.height = height;
 
