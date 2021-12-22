@@ -6,8 +6,10 @@ let timer;
 
 function countdownTimer( timeInSeconds ) {
     clearInterval( timer );
-    const then = Date.now() + (timeInSeconds * 1000);
-    timeInSeconds = (then - Date.now()) / 1000;
+
+    //Using this instead of timeInSeconds parameter because setInterval function somtimes stops when page is beoing scrolled on a phone
+    const timeAfterCountdown = Date.now() + (timeInSeconds * 1000);
+    timeInSeconds = (timeAfterCountdown - Date.now()) / 1000;
 
     displayRemainingTime( timeInSeconds );
     endTime.innerText = getEndTime( timeInSeconds );
@@ -34,19 +36,18 @@ function startTimer() {
 
 function startCustomTimer( e ) {
     e.preventDefault();
-    const timeInSeconds = parseInt( this.children.minutes.value ) * 60;
+    const timeInSeconds = parseInt( this.minutes.value ) * 60;
     countdownTimer( timeInSeconds );
-    document.querySelector( "#custom input[name=minutes]" ).value = "";
+    this.reset();
 }
 
 function formatTimeFromSeconds( timeInSeconds ) {
     const hour = Math.floor( timeInSeconds / 3600 ).toString();
     const minute = Math.floor( timeInSeconds % 3600 / 60 ).toString();
     const second = Math.floor( timeInSeconds % 3600 % 60 ).toString();
+    const time = `${minute.padStart( 2, 0 )}:${second.padStart( 2, 0 )}`;
 
-    return hour > 0 ? 
-        `${hour.padStart( 2, 0 )}:${minute.padStart( 2, 0 )}:${second.padStart( 2, 0 )}` :
-        `${minute.padStart( 2, 0 )}:${second.padStart( 2, 0 )}`;
+    return hour > 0 ? `${hour.padStart( 2, 0 )}:${time}` : time;
 } 
 
 function getEndTime( timeInSeconds ) {
