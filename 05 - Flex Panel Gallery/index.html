@@ -132,20 +132,18 @@
 
   <script>
 
-    let panels = document.querySelectorAll( ".panels .panel" );
-
+    const panels = document.querySelectorAll( ".panels .panel" );
     panels.forEach( panel => panel.addEventListener( "click", toggleTransition ));
 
     function toggleTransition() {
       if( !this.classList.contains( "active" ) ) {
-        panels.forEach( panel => ( panel.classList.remove( "active" ), panel.classList.remove( "activeText" ) ) );
+        panels.forEach( panel => panel.classList.remove( "active", "activeText" ));
         this.classList.add( "active" );
         //Add delay for the text to transition
-        let panel = this;
+        const panel = this;
         setTimeout( () => panel.classList.add( "activeText" ) , 400);
       } else {
-        this.classList.remove( "active" );
-        this.classList.remove( "activeText" );
+        this.classList.remove( "active", "activeText" );
       }
     }
 
