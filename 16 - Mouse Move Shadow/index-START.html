@@ -44,8 +44,8 @@
     const shadowMaxX = 100;
     const shadowMaxY = 100;
 
-    let shadowX = shadowMaxX * (e.offsetX - (hero.offsetWidth / 2)) / (hero.offsetWidth / 2);
-    let shadowY = shadowMaxY * (e.offsetY - (hero.offsetHeight / 2)) / (hero.offsetHeight / 2);
+    const shadowX = shadowMaxX * (e.offsetX - (hero.offsetWidth / 2)) / (hero.offsetWidth / 2);
+    const shadowY = shadowMaxY * (e.offsetY - (hero.offsetHeight / 2)) / (hero.offsetHeight / 2);
 
     text.style.textShadow = `
     ${shadowX}px ${shadowY}px 0 red,
