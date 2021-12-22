@@ -24,7 +24,11 @@ function paintToCanvas() {
         ctx.drawImage( video, 0, 0, width, height );
         let pixels = ctx.getImageData(0, 0, width, height);
 
-        pixels = greenScreen(pixels);
+        //This is to change the effect shown randomly per paint on canvas
+        const effects = ['redEffect', 'rgbSplit', 'greenScreen'];
+        const effectIndex = Math.floor( Math.random() * 3 );
+
+        pixels = window[effects[effectIndex]](pixels);
         ctx.putImageData(pixels, 0, 0);
     }, 10);
 }
