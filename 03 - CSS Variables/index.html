@@ -65,11 +65,8 @@
     inputs.forEach(input => input.addEventListener( "change", updateValue ));
 
     function updateValue() {
-      if( isNaN(this.value) ) {
-        document.documentElement.style.setProperty( `--${this.name}`, `${this.value}` );
-      } else {
-        document.documentElement.style.setProperty( `--${this.name}`, `${this.value}px` );
-      }
+      const value = isNaN( this.value ) ? this.value : `${this.value}px`;
+      document.documentElement.style.setProperty( `--${this.name}`, value );
     }
     
   </script>
