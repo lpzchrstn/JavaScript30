@@ -44,7 +44,7 @@
   const scoreBoard = document.querySelector('.score');
   const moles = document.querySelectorAll('.mole');
   const scoreList = document.querySelector(".score-list");
-  let highScores = JSON.parse( localStorage.getItem( "highScores" )) || [];
+  const highScores = JSON.parse( localStorage.getItem( "highScores" )) || [];
   let score = 0;
   let gameStarted = false;
   let lastHole;
@@ -65,7 +65,7 @@
   }
 
   function randomNumberGenerator( minNumber, maxNumber, isWholeNumber = true, decimalPlaces = 2 ) {
-    let randomNumber = (Math.random() * (maxNumber - minNumber + 1)) + minNumber;
+    const randomNumber = (Math.random() * (maxNumber - minNumber + 1)) + minNumber;
     return isWholeNumber ? Math.floor( randomNumber ) : parseFloat( randomNumber.toFixed( decimalPlaces ));
   }
 
@@ -87,7 +87,6 @@
 
   function pickAMole() {
     const id = randomNumberGenerator( 0, holes.length - 1 );
-
     if( holes[id] == lastHole ) {
       return pickAMole();
     }
@@ -103,30 +102,31 @@
   }
 
   function saveScore() {
-    if( highScores.length < 5 ) {
-      highScores.push( score );
-      highScores.sort( (a, b) => b - a );
+    if( highScores.length < 5 || highScores.some( highScore => highScore < score ) ) {
+      addNewHighScore();
       localStorage.setItem( "highScores", JSON.stringify( highScores ));
       updateScoreList();
-    } else {
-      if( highScores.some( highScore => highScore < score ) ) {
-        highScores.push( score );
-        highScores.sort( (a, b) => b - a );
-        highScores = highScores.slice( 0, 5 );
-        localStorage.setItem( "highScores", JSON.stringify( highScores ));
-        updateScoreList();
-      }
+    }
+  }
+
+  function addNewHighScore() {
+    highScores.push( score );
+    highScores.sort( (a, b) => b - a );
+
+    if( highScores.length >= 5 ) {
+      const tempHighScore = highScores.slice( 0, 5 );
+      highScores.length = 0;
+      highScores.push( ...tempHighScore );
     }
   }
 
   function updateScoreList() {
-    let html = "";
     if( highScores.length == 0 ) {
       scoreList.innerHTML = "<li>No Record</li>";
       return;
     }
-    highScores.forEach( score => html += `<li>${score}</li>` );
-    scoreList.innerHTML = html;
+
+    scoreList.innerHTML = highScores.map( score => `<li>${score}</li>` ).join("");
   }
 
   moles.forEach( mole => mole.addEventListener( "click", whackedAMole ));

@@ -69,12 +69,17 @@ h1 {
 }
 
 .high-score {
-  background-color: white;
+  background-color: rgba(255,255,255,0.2);
   margin-top: 100px;
+  margin-bottom: 100px;
   width: 500px;
   position: relative;
   left: 50%;
   transform: translateX(-50%);
   padding: 20px;
   font-size: 40px;
+}
+
+.high-score * {
+  margin: 0;
 }
