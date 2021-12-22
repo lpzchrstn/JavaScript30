@@ -70,36 +70,24 @@
   </style>
 
   <script>
-    let second = minute = hour = 0;
-    let initialRotate = 90;
+    const initialRotate = 90;
     setInterval( timeTick, 1000 );
 
     function timeTick() {
-      second += 1;
-      setElementRotation( "second-hand", second - 1, 60 );
+      const time = new Date();
+      const seconds = time.getSeconds();
+      const minutes = time.getMinutes();
+      const hours = time.getHours();
 
-      if( second == 60 ) {
-        second = 0;
-        minute += 1;
-        setElementRotation( "min-hand", minute, 60 );
-      }
-
-      if( minute == 60 ) {
-        minute = 0;
-        hour += 1;
-        setElementRotation( "hour-hand", hour, 12 );
-      }
-
-      if(hour == 12) {
-        hour = 0;
-      }
-
+      setHandRotation( "second-hand", seconds, 60 );
+      setHandRotation( "min-hand", minutes, 60 );
+      setHandRotation( "hour-hand", hours, 12 );
     }
 
-    function setElementRotation( elementClass, currentTimeValue, maxTimeValue ) {
-      let element = document.querySelector(`.hand.${elementClass}`);
-      elementRotation = ( currentTimeValue / maxTimeValue ) * 360;
-      element.style.transform = `rotate(${elementRotation + initialRotate}deg)`;
+    function setHandRotation( handClass, currentTimeValue, maxTimeValue ) {
+      const hand = document.querySelector(`.hand.${handClass}`);
+      handRotation = ( currentTimeValue / maxTimeValue ) * 360;
+      hand.style.transform = `rotate(${handRotation + initialRotate}deg)`;
     }
   </script>
 </body>
