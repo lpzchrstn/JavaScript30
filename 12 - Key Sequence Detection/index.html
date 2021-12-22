@@ -14,12 +14,8 @@
   sequence.split("").forEach( letter => sequenceInCode.push( letter.toUpperCase().charCodeAt(0) ));
 
   let pressed = [];
-  window.addEventListener( "keyup", (e) => {
-    if( sequenceInCode[pressed.length] == e.keyCode ) {
-      pressed.push( e.keyCode );
-    } else {
-      pressed = [];
-    }
+  window.addEventListener( "keyup", e => {
+    sequenceInCode[pressed.length] == e.keyCode ? pressed.push( e.keyCode ) : pressed = [];
 
     if(sequenceInCode.length == pressed.length) {
       console.log( "You did it!" );
