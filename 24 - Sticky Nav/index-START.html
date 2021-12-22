@@ -56,7 +56,7 @@
 <script>
   const nav = document.querySelector("#main");
   const body = document.querySelector(".site-wrap");
-  let navTop = nav.offsetTop;
+  const navTop = nav.offsetTop;
   function makeSticky() {
     if( window.scrollY >= navTop) {
       document.body.classList.add("fixed-nav");
