@@ -71,8 +71,9 @@
 
   <script>
     const initialRotate = 90;
-    setInterval( timeTick, 1000 );
-    timeTick();
+    const secHand = document.querySelector('.hand.second-hand');
+    const minHand = document.querySelector('.hand.min-hand');
+    const hourHand = document.querySelector('.hand.hour-hand');
 
     function timeTick() {
       const time = new Date();
@@ -80,16 +81,18 @@
       const minutes = time.getMinutes();
       const hours = time.getHours();
 
-      setHandRotation( "second-hand", seconds, 60 );
-      setHandRotation( "min-hand", minutes, 60 );
-      setHandRotation( "hour-hand", hours, 12 );
+      setHandRotation( secHand, seconds, 60 );
+      setHandRotation( minHand, minutes, 60 );
+      setHandRotation( hourHand, hours, 12 );
     }
 
-    function setHandRotation( handClass, currentTimeValue, maxTimeValue ) {
-      const hand = document.querySelector(`.hand.${handClass}`);
+    function setHandRotation( hand, currentTimeValue, maxTimeValue ) {
       const handRotation = ( currentTimeValue / maxTimeValue ) * 360;
       hand.style.transform = `rotate(${handRotation + initialRotate}deg)`;
     }
+
+    setInterval( timeTick, 1000 );
+    timeTick();
   </script>
 </body>
 </html>
