@@ -62,13 +62,37 @@
       background: black;
       position: absolute;
       top: 50%;
+      transform-origin: 100%;
+      transform: rotate(90deg);
+      transition: all .5s ease-in-out;
     }
 
   </style>
 
   <script>
+    const initialRotate = 90;
+    const secHand = document.querySelector('.hand.second-hand');
+    const minHand = document.querySelector('.hand.min-hand');
+    const hourHand = document.querySelector('.hand.hour-hand');
 
+    function timeTick() {
+      const time = new Date();
+      const seconds = time.getSeconds();
+      const minutes = time.getMinutes();
+      const hours = time.getHours();
 
+      setHandRotation( secHand, seconds, 60 );
+      setHandRotation( minHand, minutes, 60 );
+      setHandRotation( hourHand, hours, 12 );
+    }
+
+    function setHandRotation( hand, currentTimeValue, maxTimeValue ) {
+      const handRotation = ( currentTimeValue / maxTimeValue ) * 360;
+      hand.style.transform = `rotate(${handRotation + initialRotate}deg)`;
+    }
+
+    setInterval( timeTick, 1000 );
+    timeTick();
   </script>
 </body>
 </html>
