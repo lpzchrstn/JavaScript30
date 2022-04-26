@@ -220,20 +220,20 @@
 </style>
 
 <script>
-  const navItems = document.querySelectorAll(".cool li");
-  const highlight = document.querySelector(".dropdownBackground");
-  const nav  = document.querySelector('.top');
+  const navItems = [...document.querySelectorAll('.cool li')];
+  const highlight = document.querySelector('.dropdownBackground');
+  const nav = document.querySelector('.top');
 
-  function highlightNav( e ) {
-    this.classList.add( "trigger-enter" );
+  function highlightNav() {
+    this.classList.add('trigger-enter');
     setTimeout(() => {
-      if( this.classList.contains( "trigger-enter" )) {
-        this.classList.add( "trigger-enter-active" );
+      if(this.classList.contains('trigger-enter')) {
+        this.classList.add('trigger-enter-active');
       }
     }, 200);
-    highlight.classList.add( "open" );
+    highlight.classList.add('open');
 
-    const navBody = this.querySelector( ".dropdown" );
+    const navBody = this.querySelector('.dropdown');
     const navBodyCoords = navBody.getBoundingClientRect();
     const navCoords = nav.getBoundingClientRect();
 
@@ -243,12 +243,12 @@
   }
 
   function unHighlightNav() {
-    this.classList.remove( "trigger-enter", "trigger-active" );
+    this.classList.remove('trigger-enter', 'trigger-active');
     highlight.classList.remove('open');
   }
 
-  navItems.forEach( item => item.addEventListener( "mouseenter", highlightNav ));
-  navItems.forEach( item => item.addEventListener( "mouseleave", unHighlightNav ));
+  navItems.forEach(item => item.addEventListener('mouseenter', highlightNav));
+  navItems.forEach(item => item.addEventListener('mouseleave', unHighlightNav));
 </script>
 
 </body>
