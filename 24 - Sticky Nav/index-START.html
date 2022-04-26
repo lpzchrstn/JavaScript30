@@ -54,20 +54,20 @@
   </div>
 
 <script>
-  const nav = document.querySelector("#main");
-  const body = document.querySelector(".site-wrap");
+  const nav = document.querySelector('#main');
+  const body = document.querySelector('.site-wrap');
   const navTop = nav.offsetTop;
   function makeSticky() {
-    if( window.scrollY >= navTop) {
-      document.body.classList.add("fixed-nav");
+    if(window.scrollY >= navTop) {
+      document.body.classList.add('fixed-nav');
       body.style.marginTop = `${nav.offsetHeight}px`;
     } else {
-      document.body.classList.remove("fixed-nav");
-      body.style.marginTop = "0px";
+      document.body.classList.remove('fixed-nav');
+      body.style.marginTop = '0px';
     }
   }
 
-  window.addEventListener( "scroll", makeSticky );
+  window.addEventListener('scroll', makeSticky);
 </script>
 
 </body>
