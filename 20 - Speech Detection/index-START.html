@@ -26,31 +26,30 @@
       .map(result => result.transcript)
       .join('');
 
-      checkTriggers( transcript );
+    checkTriggers(transcript);
 
-      if (e.results[0].isFinal) {
-        p = document.createElement('p');
-        words.appendChild(p);
-      }
+    if(e.results[0].isFinal) {
+      p = document.createElement('p');
+      words.appendChild(p);
+    }
   });
 
-  function checkTriggers( transcript ) {
-    //Text transforms
+  function checkTriggers(transcript) {
+    // Text transforms
     const poopScript = transcript.replace(/poop|poo|shit|dump/gi, '💩');
     p.textContent = poopScript;
 
-    //Conditions
+    // Conditions
     const deleteScript = ['delete note', 'delete notes', 'restart notes'].includes(transcript);
     const rickRollScript = ['rick roll', 'rickroll', 'never gonna give you up'].includes(transcript);
 
-    //Triggers
-    deleteScript ? words.innerHTML = "" : "";
-    rickRollScript ? window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_blank') : "";
+    // Triggers
+    deleteScript ? words.innerHTML = '' : null;
+    rickRollScript ? window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_blank') : null;
   }
 
   recognition.addEventListener('end', recognition.start);
   recognition.start();
-
 </script>
 
 
