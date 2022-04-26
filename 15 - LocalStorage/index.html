@@ -37,63 +37,60 @@
   const checkAll = document.querySelector('#check-all');
   const uncheckAll = document.querySelector('#uncheck-all');
 
-  if( localStorage.getItem( "plates" ) ) {
-    items.push( ...JSON.parse( localStorage.getItem( "plates" ))); 
+  if(localStorage.getItem('plates')) {
+    items.push(...JSON.parse(localStorage.getItem('plates')));
   }
 
-  //Initial population of dishes from local storage
+  // Initial population of dishes from local storage
   populatePlates();
   const checkboxes = document.querySelectorAll('input[type=checkbox]');
 
-  checkboxes.forEach( checkbox => checkbox.addEventListener( "click", updateStatus ));
-  addItems.addEventListener( "submit", addDish );
-  deleteAll.addEventListener( "click", deleteAllDish );
-  checkAll.addEventListener( "click", toggleAllStatus );
-  uncheckAll.addEventListener( "click", () => {
-    toggleAllStatus( false );
+  checkboxes.forEach(checkbox => checkbox.addEventListener('click', updateStatus));
+  addItems.addEventListener('submit', addDish);
+  deleteAll.addEventListener('click', deleteAllDish);
+  checkAll.addEventListener('click', toggleAllStatus);
+  uncheckAll.addEventListener('click', () => {
+    toggleAllStatus(false);
   });
 
-  function addDish( e ) {
+  function addDish(e) {
     e.preventDefault();
 
-    let dish = {
+    const dish = {
       name: dishField.value,
-      checked: false
+      checked: false,
     };
 
-    items.push( dish );
+    items.push(dish);
     saveDishes();
-    dishField.value = "";
+    dishField.value = '';
 
     populatePlates();
   }
 
   function populatePlates() {
-    let html = "";
-
-    const itemsHtml = items.map( (item, i) => 
-      `
-      <li>
+    const itemsHtml = items.map((item, i) => (
+      `<li>
         <input type="checkbox" id="item${i}" ${item.checked ? 'checked' : ''} dish-index="${i}" />
         <label for="item${i}">${item.name}</label>
       </li>`
-    );
+    ));
 
-    itemsList.innerHTML = itemsHtml.join("");
+    itemsList.innerHTML = itemsHtml.join('');
 
-    //Reselect new ccheckboxes and assign new event listener
-    let newCheckboxes = document.querySelectorAll( 'input[type=checkbox]' );
-    newCheckboxes.forEach( checkbox => checkbox.addEventListener( "click", updateStatus ));
+    // Reselect new ccheckboxes and assign new event listener
+    const newCheckboxes = document.querySelectorAll('input[type=checkbox]');
+    newCheckboxes.forEach(checkbox => checkbox.addEventListener('click', updateStatus));
   }
 
   function updateStatus() {
-    let dishIndex = this.getAttribute( "dish-index" );
+    const dishIndex = this.getAttribute('dish-index');
     items[dishIndex].checked = !items[dishIndex].checked;
     saveDishes();
   }
 
   function saveDishes() {
-    localStorage.setItem( 'plates', JSON.stringify(items) );
+    localStorage.setItem('plates', JSON.stringify(items));
   }
 
   function deleteAllDish() {
@@ -102,15 +99,12 @@
     saveDishes();
   }
 
-  function toggleAllStatus( status = true) {
-    items.forEach( item => item.checked = status );
+  function toggleAllStatus(status = true) {
+    items.forEach(item => item.checked = status);
     populatePlates();
     saveDishes();
   }
-
 </script>
-
-
 </body>
 </html>
 
