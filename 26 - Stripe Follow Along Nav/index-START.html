@@ -220,6 +220,35 @@
 </style>
 
 <script>
+  const navItems = [...document.querySelectorAll('.cool li')];
+  const highlight = document.querySelector('.dropdownBackground');
+  const nav = document.querySelector('.top');
+
+  function highlightNav() {
+    this.classList.add('trigger-enter');
+    setTimeout(() => {
+      if(this.classList.contains('trigger-enter')) {
+        this.classList.add('trigger-enter-active');
+      }
+    }, 200);
+    highlight.classList.add('open');
+
+    const navBody = this.querySelector('.dropdown');
+    const navBodyCoords = navBody.getBoundingClientRect();
+    const navCoords = nav.getBoundingClientRect();
+
+    highlight.style.height = `${navBodyCoords.height}px`;
+    highlight.style.width = `${navBodyCoords.width}px`;
+    highlight.style.transform = `translate(${navBodyCoords.left - navCoords.left}px, ${navBodyCoords.top - navCoords.top}px)`;
+  }
+
+  function unHighlightNav() {
+    this.classList.remove('trigger-enter', 'trigger-active');
+    highlight.classList.remove('open');
+  }
+
+  navItems.forEach(item => item.addEventListener('mouseenter', highlightNav));
+  navItems.forEach(item => item.addEventListener('mouseleave', unHighlightNav));
 </script>
 
 </body>
