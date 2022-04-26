@@ -35,38 +35,37 @@
   </div>
 
 <script>
-const items = document.querySelector(".items");
+const items = document.querySelector('.items');
 let mouseOrigin = 0;
 let isMoveSlide = false;
-let scrollLeft = items.scrollLeft;
+let { scrollLeft } = items;
 const moveMultiplier = 2;
 
-function moveSlide( e ) {
-  if( !isMoveSlide ) return;
+function moveSlide(e) {
+  if(!isMoveSlide) return;
 
   e.preventDefault();
   const pixelsMoved = (mouseOrigin - e.clientX) * moveMultiplier;
   const changeScrollX = scrollLeft + pixelsMoved;
-  items.scrollTo( changeScrollX, 0 );
+  items.scrollTo(changeScrollX, 0);
 }
 
-function startDragEvent( e ) {
+function startDragEvent(e) {
   mouseOrigin = e.clientX;
   isMoveSlide = true;
-  items.classList.add( "active" );
+  items.classList.add('active');
 }
 
 function endDragEvent() {
   isMoveSlide = false;
   scrollLeft = items.scrollLeft;
-  items.classList.remove( "active" );
+  items.classList.remove('active');
 }
 
-items.addEventListener("mousedown", startDragEvent );
-items.addEventListener( "mousemove", moveSlide );
-items.addEventListener( "mouseleave", endDragEvent );
-items.addEventListener( "mouseup", endDragEvent );
-
+items.addEventListener('mousedown', startDragEvent);
+items.addEventListener('mousemove', moveSlide);
+items.addEventListener('mouseleave', endDragEvent);
+items.addEventListener('mouseup', endDragEvent);
 </script>
 
   </body>
