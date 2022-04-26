@@ -61,15 +61,13 @@
   </style>
 
   <script>
-    let inputs = document.querySelectorAll( ".controls input" );
-    inputs.forEach(input => input.addEventListener( "change", updateValue ));
+    const inputs = [...document.querySelectorAll('.controls input')];
+    inputs.forEach(input => input.addEventListener('change', updateValue));
 
     function updateValue() {
-      const value = isNaN( this.value ) ? this.value : `${this.value}px`;
-      document.documentElement.style.setProperty( `--${this.name}`, value );
+      const value = Number.isNaN(this.value) ? this.value : `${this.value}px`;
+      document.documentElement.style.setProperty(`--${this.name}`, value);
     }
-    
   </script>
-
 </body>
 </html>
