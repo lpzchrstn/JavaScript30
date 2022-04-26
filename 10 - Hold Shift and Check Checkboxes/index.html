@@ -96,28 +96,26 @@
   </div>
 
 <script>
-  const checkboxes = document.querySelectorAll( ".inbox .item input" );
-  checkboxes.forEach( checkbox => checkbox.addEventListener( "click", selectMultiple ) );
+  const checkboxes = [...document.querySelectorAll('.inbox .item input')];
+  checkboxes.forEach(checkbox => checkbox.addEventListener('click', selectMultiple));
   let lastSelected;
 
-  function selectMultiple( e ) {
-    let cbIndex = 0;
-    if( e.shiftKey ) {
+  function selectMultiple(e) {
+    if(e.shiftKey) {
       let triggerAutoSelect = false;
-      checkboxes.forEach( checkbox => {
-        if( checkbox == this || checkbox == checkboxes[lastSelected] ) triggerAutoSelect = !triggerAutoSelect;
-        triggerAutoSelect ? checkbox.checked = true : "";
-        cbIndex++;
+      checkboxes.forEach(checkbox => {
+        if(checkbox === this || checkbox === checkboxes[lastSelected]) triggerAutoSelect = !triggerAutoSelect;
+        triggerAutoSelect ? checkbox.checked = true : '';
       });
     }
 
-    setLastSelected( this );
+    setLastSelected(this);
   }
 
-  function setLastSelected( selectedCheckbox ) {
+  function setLastSelected(selectedCheckbox) {
     let cbIndex = 0;
-    checkboxes.forEach( checkbox => {
-      checkbox == selectedCheckbox ? lastSelected = cbIndex : "";
+    checkboxes.forEach(checkbox => {
+      checkbox === selectedCheckbox ? lastSelected = cbIndex : '';
       cbIndex++;
     });
   }
