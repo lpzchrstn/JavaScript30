@@ -131,25 +131,21 @@
   </div>
 
   <script>
-
-    const panels = document.querySelectorAll( ".panels .panel" );
-    panels.forEach( panel => panel.addEventListener( "click", toggleTransition ));
+    const panels = document.querySelectorAll('.panels .panel');
+    panels.forEach(panel => panel.addEventListener('click', toggleTransition));
 
     function toggleTransition() {
-      if( !this.classList.contains( "active" ) ) {
-        panels.forEach( panel => panel.classList.remove( "active", "activeText" ));
-        this.classList.add( "active" );
-        //Add delay for the text to transition
+      if(!this.classList.contains('active')) {
+        panels.forEach(panel => panel.classList.remove('active', 'activeText'));
+        this.classList.add('active');
+        // Add delay for the text to transition
         const panel = this;
-        setTimeout( () => panel.classList.add( "activeText" ) , 400);
+        setTimeout(() => panel.classList.add('activeText'), 400);
       } else {
-        this.classList.remove( "active", "activeText" );
+        this.classList.remove('active', 'activeText');
       }
     }
-
   </script>
-
-
 
 </body>
 </html>
