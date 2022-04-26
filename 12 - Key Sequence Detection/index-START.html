@@ -7,18 +7,19 @@
 </head>
 <body>
 <script>
-  const sequence = "christian";
-  const sequenceInCode = [];
+  const sequence = 'christian';
+  const getKeyCodeOfSequence = sequence
+    .split('')
+    .map(letter => letter.toUpperCase().charCodeAt(0));
 
-  //Get the keyCode of the sequence
-  sequence.split("").forEach( letter => sequenceInCode.push( letter.toUpperCase().charCodeAt(0) ));
+  const sequenceInCode = getKeyCodeOfSequence(sequence);
 
   let pressed = [];
-  window.addEventListener( "keyup", e => {
-    sequenceInCode[pressed.length] == e.keyCode ? pressed.push( e.keyCode ) : pressed = [];
+  window.addEventListener('keyup', e => {
+    sequenceInCode[pressed.length] === e.keyCode ? pressed.push(e.keyCode) : pressed = [];
 
-    if(sequenceInCode.length == pressed.length) {
-      console.log( "You did it!" );
+    if(sequenceInCode.length === pressed.length) {
+      console.log('You did it!');
     }
   });
 </script>
