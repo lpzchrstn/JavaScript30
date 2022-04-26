@@ -15,16 +15,16 @@
   </div>
 
 <script>
-  const speedBarContainer = document.querySelector( ".speed" );
-  const speedBar = document.querySelector( ".speed-bar" );
+  const speedBarContainer = document.querySelector('.speed');
+  const speedBar = document.querySelector('.speed-bar');
   const video = document.querySelector('video.flex');
 
   let isSpeedBarDragged = false;
   const maxSpeed = 4;
-  const minSpeed = .4;
+  const minSpeed = 0.4;
 
-  function moveSpeedBar( e ) {
-    if( !isSpeedBarDragged ) return;
+  function moveSpeedBar(e) {
+    if(!isSpeedBarDragged) return;
 
     const valueInPercent = (e.pageY - this.offsetTop) / this.offsetHeight;
     const height = `${Math.ceil(valueInPercent * 100)}%`;
@@ -43,12 +43,10 @@
     isSpeedBarDragged = false;
   }
 
-  speedBarContainer.addEventListener( "mousedown", enableMoveSpeedBar );
-  speedBarContainer.addEventListener( "mouseup", disableMoveSpeedBar );
-  speedBarContainer.addEventListener( "mouseleave", disableMoveSpeedBar );
-  speedBarContainer.addEventListener( "mousemove", moveSpeedBar );
-
-
+  speedBarContainer.addEventListener('mousedown', enableMoveSpeedBar);
+  speedBarContainer.addEventListener('mouseup', disableMoveSpeedBar);
+  speedBarContainer.addEventListener('mouseleave', disableMoveSpeedBar);
+  speedBarContainer.addEventListener('mousemove', moveSpeedBar);
 </script>
 </body>
 </html>
