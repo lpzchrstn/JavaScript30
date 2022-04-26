@@ -26,6 +26,12 @@
       misc styles, nothing to do with CSS variables
     */
 
+    :root {
+      --spacing: 10px;
+      --blur: 10px;
+      --base: #ffc600;
+    }
+
     body {
       text-align: center;
       background: #193549;
@@ -42,10 +48,26 @@
     input {
       width: 100px;
     }
+
+    img {
+      padding: var(--spacing);
+      filter: blur(var(--blur));
+      background-color: var(--base);
+    }
+
+    h2 .hl {
+      color: var(--base);
+    }
   </style>
 
   <script>
-  </script>
+    const inputs = [...document.querySelectorAll('.controls input')];
+    inputs.forEach(input => input.addEventListener('change', updateValue));
 
+    function updateValue() {
+      const value = Number.isNaN(this.value) ? this.value : `${this.value}px`;
+      document.documentElement.style.setProperty(`--${this.name}`, value);
+    }
+  </script>
 </body>
 </html>
