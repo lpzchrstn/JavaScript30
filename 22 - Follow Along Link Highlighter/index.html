@@ -6,6 +6,7 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <span class="highlight"></span>
 
     <nav>
       <ul class="menu">
@@ -26,7 +27,17 @@
     </div>
 
   <script>
-    // 👀👀👀👀👀👀👀👀👀👀👀👀👀👀👀
+    const links = [...document.querySelectorAll('a')];
+    const highlight = document.querySelector('.highlight');
+
+    function highlightLink() {
+      const coordinates = this.getBoundingClientRect();
+      highlight.style.width = `${coordinates.width}px`;
+      highlight.style.height = `${coordinates.height}px`;
+      highlight.style.transform = `translate(${coordinates.left}px, ${coordinates.top + window.scrollY}px)`;
+    }
+
+    links.forEach(link => link.addEventListener('mouseenter', highlightLink));
   </script>
 </body>
 </html>
