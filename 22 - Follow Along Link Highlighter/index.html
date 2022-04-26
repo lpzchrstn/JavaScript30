@@ -27,8 +27,8 @@
     </div>
 
   <script>
-    const links = document.querySelectorAll("a");
-    const highlight = document.querySelector(".highlight");
+    const links = [...document.querySelectorAll('a')];
+    const highlight = document.querySelector('.highlight');
 
     function highlightLink() {
       const coordinates = this.getBoundingClientRect();
@@ -37,9 +37,7 @@
       highlight.style.transform = `translate(${coordinates.left}px, ${coordinates.top + window.scrollY}px)`;
     }
 
-    links.forEach( link => link.addEventListener( "mouseenter", highlightLink ));
-
-
+    links.forEach(link => link.addEventListener('mouseenter', highlightLink));
   </script>
 </body>
 </html>
