@@ -40,11 +40,11 @@
   </div>
 
 <script>
-  const holes = document.querySelectorAll('.hole');
+  const holes = [...document.querySelectorAll('.hole')];
   const scoreBoard = document.querySelector('.score');
-  const moles = document.querySelectorAll('.mole');
-  const scoreList = document.querySelector(".score-list");
-  const highScores = JSON.parse( localStorage.getItem( "highScores" )) || [];
+  const moles = [...document.querySelectorAll('.mole')];
+  const scoreList = document.querySelector('.score-list');
+  const highScores = JSON.parse(localStorage.getItem('highScores')) || [];
   let score = 0;
   let gameStarted = false;
   let lastHole;
@@ -57,28 +57,28 @@
     gameStarted = true;
     moleOut();
 
-    const gameDuration = 10; //in seconds
-    setTimeout( () => {
+    const gameDuration = 10; // in seconds
+    setTimeout(() => {
       gameStarted = false;
       saveScore();
-    }, gameDuration * 1000 );
+    }, gameDuration * 1000);
   }
 
-  function randomNumberGenerator( minNumber, maxNumber, isWholeNumber = true, decimalPlaces = 2 ) {
+  function randomNumberGenerator(minNumber, maxNumber, isWholeNumber = true, decimalPlaces = 2) {
     const randomNumber = (Math.random() * (maxNumber - minNumber + 1)) + minNumber;
-    return isWholeNumber ? Math.floor( randomNumber ) : parseFloat( randomNumber.toFixed( decimalPlaces ));
+    return isWholeNumber ? Math.floor(randomNumber) : parseFloat(randomNumber.toFixed(decimalPlaces));
   }
 
   function moleOut() {
-    if( !gameStarted ) return;
+    if(!gameStarted) return;
     const hole = pickAMole();
     const mole = holes[hole].querySelector(`.mole`);
-    const time = randomNumberGenerator( 200, 1000 );
+    const time = randomNumberGenerator(200, 1000);
 
-    holes[hole].classList.add( "up" );
+    holes[hole].classList.add('up');
     mole.style.transition = `all ${time / 1000}s`;
-    setTimeout( () => {
-      holes[hole].classList.remove( "up" );
+    setTimeout(() => {
+      holes[hole].classList.remove('up');
       moleOut();
     }, time);
 
@@ -86,8 +86,8 @@
   }
 
   function pickAMole() {
-    const id = randomNumberGenerator( 0, holes.length - 1 );
-    if( holes[id] == lastHole ) {
+    const id = randomNumberGenerator(0, holes.length - 1);
+    if(holes[id] === lastHole) {
       return pickAMole();
     }
 
@@ -95,41 +95,41 @@
   }
 
   function whackedAMole() {
-    if( !gameStarted ) return;
+    if(!gameStarted) return;
     score++;
     scoreBoard.innerText = score;
     this.parentNode.classList.remove('up');
   }
 
   function saveScore() {
-    if( highScores.length < 5 || highScores.some( highScore => highScore < score ) ) {
+    if(highScores.length < 5 || highScores.some(highScore => highScore < score)) {
       addNewHighScore();
-      localStorage.setItem( "highScores", JSON.stringify( highScores ));
+      localStorage.setItem('highScores', JSON.stringify(highScores));
       updateScoreList();
     }
   }
 
   function addNewHighScore() {
-    highScores.push( score );
-    highScores.sort( (a, b) => b - a );
+    highScores.push(score);
+    highScores.sort((a, b) => b - a);
 
-    if( highScores.length >= 5 ) {
-      const tempHighScore = highScores.slice( 0, 5 );
+    if(highScores.length >= 5) {
+      const tempHighScore = highScores.slice(0, 5);
       highScores.length = 0;
-      highScores.push( ...tempHighScore );
+      highScores.push(...tempHighScore);
     }
   }
 
   function updateScoreList() {
-    if( highScores.length == 0 ) {
-      scoreList.innerHTML = "<li>No Record</li>";
+    if(highScores.length === 0) {
+      scoreList.innerHTML = '<li>No Record</li>';
       return;
     }
 
-    scoreList.innerHTML = highScores.map( score => `<li>${score}</li>` ).join("");
+    scoreList.innerHTML = highScores.map(scoreItem => `<li>${scoreItem}</li>`).join('');
   }
 
-  moles.forEach( mole => mole.addEventListener( "click", whackedAMole ));
+  moles.forEach(mole => mole.addEventListener('click', whackedAMole));
 </script>
 </body>
 </html>
