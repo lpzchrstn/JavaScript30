@@ -96,6 +96,29 @@
   </div>
 
 <script>
+  const checkboxes = [...document.querySelectorAll('.inbox .item input')];
+  checkboxes.forEach(checkbox => checkbox.addEventListener('click', selectMultiple));
+  let lastSelected;
+
+  function selectMultiple(e) {
+    if(e.shiftKey) {
+      let triggerAutoSelect = false;
+      checkboxes.forEach(checkbox => {
+        if(checkbox === this || checkbox === checkboxes[lastSelected]) triggerAutoSelect = !triggerAutoSelect;
+        triggerAutoSelect ? checkbox.checked = true : '';
+      });
+    }
+
+    setLastSelected(this);
+  }
+
+  function setLastSelected(selectedCheckbox) {
+    let cbIndex = 0;
+    checkboxes.forEach(checkbox => {
+      checkbox === selectedCheckbox ? lastSelected = cbIndex : '';
+      cbIndex++;
+    });
+  }
 </script>
 </body>
 </html>
