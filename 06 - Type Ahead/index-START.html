@@ -6,7 +6,6 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
   <form class="search-form">
     <input type="text" class="search" placeholder="City or State">
     <ul class="suggestions">
@@ -14,9 +13,54 @@
       <li>or a state</li>
     </ul>
   </form>
-<script>
-const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
 
-</script>
+  <script type="module">
+    const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+    const dataFromEndpoint = await getDataFromEndpoint();
+
+    async function getDataFromEndpoint() {
+      return fetch(endpoint)
+        .then(async response => response.json())
+        .then(async data => data);
+    }
+
+    // Search
+    const resultsElement = document.querySelector('.search-form .suggestions');
+    const searchBar = document.querySelector('input.search');
+    searchBar.addEventListener('input', () => {
+      if(searchBar.value === '') {
+        resultsElement.innerHTML = '<li>Filter for a city</li><li>or a state</li>';
+        return;
+      }
+
+      const filteredData = filterDataLibrary(searchBar.value);
+      resultsElement.innerHTML = buildResultList(filteredData);
+    });
+
+    function filterDataLibrary(query) {
+      return dataFromEndpoint.filter(data => {
+        const isCityOnQuery = data.city.toLowerCase().indexOf(query.toLowerCase()) !== -1;
+        const isStateOnQuery = data.state.toLowerCase().indexOf(query.toLowerCase()) !== -1;
+        return isCityOnQuery || isStateOnQuery;
+      });
+    }
+
+    function buildResultList(resultData) {
+      const resultList = resultData.map(result => {
+        const regex = new RegExp(searchBar.value, 'gi');
+        const finalCity = result.city.replace(regex, `<span class='hl'>${searchBar.value}</span>`);
+        const finalState = result.state.replace(regex, `<span class='hl'>${searchBar.value}</span>`);
+        return `
+        <li>
+          <span>${finalCity}, ${finalState}</span> 
+          <span class="population">${formatNumberWithCommas(result.population)}</span>
+        </li>`;
+      });
+
+      return resultList.join('');
+    }
+
+    const formatNumberWithCommas = num => num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  </script>
 </body>
 </html>
