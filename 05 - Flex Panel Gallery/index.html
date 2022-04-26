@@ -26,6 +26,7 @@
     .panels {
       min-height: 100vh;
       overflow: hidden;
+      display: flex;
     }
 
     .panel {
@@ -43,6 +44,10 @@
       font-size: 20px;
       background-size: cover;
       background-position: center;
+      flex-grow: 1;
+      justify-content: space-evenly;
+      display: flex;
+      flex-direction: column;
     }
 
     .panel1 { background-image:url(https://source.unsplash.com/gYl-UtwNg_I/1500x1500); }
@@ -63,6 +68,18 @@
       font-family: 'Amatic SC', cursive;
       text-shadow: 0 0 4px rgba(0, 0, 0, 0.72), 0 0 14px rgba(0, 0, 0, 0.45);
       font-size: 2em;
+      display: flex;
+      flex-grow: 1;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .panel p:first-of-type {
+      transform: translate(0px, -100%);
+    }
+
+    .panel p:last-of-type {
+      transform: translate(0px, 100%);
     }
     
     .panel p:nth-child(2) {
@@ -71,6 +88,15 @@
 
     .panel.open {
       font-size: 40px;
+    }
+
+    .panel.active {
+      flex-grow: 15;
+      font-size: 1.5rem;
+    }
+
+    .panel.activeText p {
+      transform: none;
     }
 
   </style>
@@ -105,10 +131,21 @@
   </div>
 
   <script>
+    const panels = document.querySelectorAll('.panels .panel');
+    panels.forEach(panel => panel.addEventListener('click', toggleTransition));
 
+    function toggleTransition() {
+      if(!this.classList.contains('active')) {
+        panels.forEach(panel => panel.classList.remove('active', 'activeText'));
+        this.classList.add('active');
+        // Add delay for the text to transition
+        const panel = this;
+        setTimeout(() => panel.classList.add('activeText'), 400);
+      } else {
+        this.classList.remove('active', 'activeText');
+      }
+    }
   </script>
-
-
 
 </body>
 </html>
