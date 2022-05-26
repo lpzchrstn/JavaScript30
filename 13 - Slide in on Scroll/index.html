@@ -44,20 +44,45 @@
 
   <script>
     function debounce(func, wait = 20, immediate = true) {
-      var timeout;
-      return function() {
-        var context = this, args = arguments;
-        var later = function() {
+      let timeout;
+      return (...args) => {
+        const context = this;
+        const later = () => {
           timeout = null;
           if (!immediate) func.apply(context, args);
         };
-        var callNow = immediate && !timeout;
+        const callNow = immediate && !timeout;
         clearTimeout(timeout);
         timeout = setTimeout(later, wait);
         if (callNow) func.apply(context, args);
       };
     }
 
+    const images = document.querySelectorAll('.site-wrap .slide-in');
+
+    function checkTriggerSlide() {
+      images.forEach(image => {
+        const scrollPos = window.scrollY + window.innerHeight;
+        const imagePosTop = image.offsetTop;
+        const imagePosBottom = image.offsetTop + image.offsetHeight;
+
+        const fadeIn = scrollPos > imagePosBottom;
+        const fadeOutLower = scrollPos > (imagePosBottom + window.innerHeight);
+        const fadeOutUpper = scrollPos < imagePosTop;
+
+        if(fadeIn) {
+          image.style.opacity = 1;
+          image.style.transform = 'none';
+        }
+
+        if(fadeOutLower || fadeOutUpper) {
+          image.style.transform = image.classList.contains('align-left') ? 'translateX(-30%) scale(0.95)' : 'translateX(30%) scale(0.95)';
+          image.style.opacity = 0;
+        }
+      });
+    }
+
+    window.addEventListener('scroll', debounce(checkTriggerSlide));
   </script>
 
   <style>
